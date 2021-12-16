@@ -1,7 +1,5 @@
 package net.labymod.addons.damageindicator.util;
 
-import java.util.HashMap;
-import java.util.Map;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.labymod.addons.damageindicator.api.HeartRenderer;
@@ -22,17 +20,12 @@ public class DamageIndicatorTag implements TagRenderer {
   private final DamageIndicatorConfiguration configuration;
   private final HeartRenderer heartRenderer;
 
-  private final Map<Player, Float> previousHearts;
-  private final Map<Player, Long> flashingHearts;
-
   private DamageIndicatorTag(LabyAPI labyAPI, DamageIndicatorConfiguration configuration) {
     this.labyAPI = labyAPI;
     this.configuration = configuration;
 
     componentRenderer = labyAPI.getComponentRenderer();
     heartRenderer = labyAPI.getInjected(HeartRenderer.class);
-    previousHearts = new HashMap<>();
-    flashingHearts = new HashMap<>();
   }
 
   /**
@@ -61,12 +54,12 @@ public class DamageIndicatorTag implements TagRenderer {
 
   @Override
   public float getWidth(Player player) {
-    return 24.0F;
+    return 30F;
   }
 
   @Override
   public float getHeight(Player player) {
-    return 8.0F;
+    return 16.0F;
   }
 
   @Override
