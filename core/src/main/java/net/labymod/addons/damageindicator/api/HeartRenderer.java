@@ -1,5 +1,7 @@
 package net.labymod.addons.damageindicator.api;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.labymod.api.Laby;
@@ -14,6 +16,9 @@ import net.labymod.api.client.resources.ResourceLocation;
 @Singleton
 public class HeartRenderer {
 
+  private static final Map<Player, Integer> PREVIOUS_HEALTH;
+  private static final Map<Player, Long> FLASHING_HEARTS;
+
   private static final ResourceLocation ICONS_TEXTURE;
   private static final Icon EMPTY_HEART;
   private static final Icon FLASHING_HEART;
@@ -21,6 +26,9 @@ public class HeartRenderer {
   private static final Icon HEART;
 
   static {
+    PREVIOUS_HEALTH = new HashMap<>();
+    FLASHING_HEARTS = new HashMap<>();
+
     ICONS_TEXTURE = Laby.getLabyAPI().getMinecraft()
         .getResources().getResourceLocationFactory().createMinecraft("textures/gui/icons.png");
     EMPTY_HEART = Icon.sprite(ICONS_TEXTURE, 16, 0, 9, 9, 256, 256);
@@ -57,17 +65,31 @@ public class HeartRenderer {
    * @param renderEmpty rendering of empty hearts
    */
   public void render(Stack stack, int x, int y, int maxHearts,
-      Player player, boolean renderEmpty) { //TODO Finish
-    float health = player.getHealth();
-    float maxHealth = player.getMaximalHealth();
+      Player player, boolean renderEmpty) { //TODO Finish flashing
+    int health = (int) Math.ceil(player.getHealth());
+    int maxHealth = (int) player.getMaximalHealth();
+    int previousHealth = PREVIOUS_HEALTH.computeIfAbsent(player, absent -> health);
 
-    for (double i = 0; i < maxHealth; i++) {
-      EMPTY_HEART.render(stack, (float) (i * 16), y, 16);
-      if (health >= i) {
-        HEART.render(stack, (float) (i * 16), y, 16);
-      }
-
-      // HALF_HEART.render(stack, (float) (i*16), y, 16);
+    Icon background = EMPTY_HEART;
+    if (previousHealth != health) {
+      background = FLASHING_HEART;
     }
+
+    for (int i = 1; i <= maxHealth; i++) {
+      if (i % 2 == 0) {
+        background.render(stack, i * 7, y, 16);
+        if (i <= health) {
+          HEART.render(stack, i * 7, y, 16);
+        }
+      } else if (i == health) {
+        background.render(stack, i * 7 + 7, y, 16);
+        HALF_HEART.render(stack, i * 7 + 7, y, 16);
+
+        i++;
+      }
+    }
+
+    PREVIOUS_HEALTH.put(player, health);
   }
 }
+
