@@ -2,7 +2,7 @@ plugins {
     id("org.spongepowered.gradle.vanilla")
     id("net.labymod.gradle.mixin")
 }
-val minecraftGameVersion = "1.18"
+val minecraftGameVersion = "1.18.1"
 val minecraftVersionTag: String = "1.18"
 
 version = "1.0.0"

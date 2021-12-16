@@ -55,10 +55,10 @@ subprojects {
 
 addon {
     addonInfo {
-        id("example")
-        displayName("Example Addon")
-        author("Example Author")
-        version(System.getenv().getOrDefault("VERSION", "0.0.0"))
+        id("damageindicator")
+        displayName("DamageIndicator")
+        author("LabyMod")
+        version(System.getenv().getOrDefault("VERSION", "0.0."))
     }
 
     internalRelease()
