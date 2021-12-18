@@ -2,8 +2,6 @@ package net.labymod.addons.damageindicator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import net.labymod.addons.damageindicator.util.DamageIndicatorConfiguration;
-import net.labymod.addons.damageindicator.util.DamageIndicatorTag;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
@@ -23,7 +21,7 @@ import net.labymod.api.models.addon.annotation.AddonMain;
  */
 @AddonMain
 @Singleton
-public class DamageIndicator {
+public final class DamageIndicator {
 
   private final LabyAPI labyAPI;
   private final SettingCategoryRegistry categoryRegistry;
@@ -51,7 +49,6 @@ public class DamageIndicator {
     ConfigurationLoader configurationLoader = labyAPI.getConfigurationLoader();
     try {
       configuration = configurationLoader.load(DamageIndicatorConfiguration.class);
-
       SettingsRegistry registry = configuration.initializeRegistry();
       categoryRegistry.register(registry.getId(), registry);
     } catch (Exception e) {

@@ -15,25 +15,15 @@ import net.labymod.api.client.resources.ResourceLocation;
  */
 public class HeartRenderer { //TODO Add to Core
 
-  private static final ResourceLocation ICONS_TEXTURE;
-  private static final Icon EMPTY_HEART;
-  private static final Icon FLASHING_HEART;
-  private static final Icon HALF_HEART;
-  private static final Icon HEART;
-  private static final int HEART_SIZE;
-  private static final int X_OFFSET;
-
-  static {
-    ICONS_TEXTURE = Laby.getLabyAPI().getMinecraft()
-        .getResources().getResourceLocationFactory()
-        .createMinecraft("textures/gui/icons.png"); //TODO Move to Core
-    EMPTY_HEART = Icon.sprite(ICONS_TEXTURE, 16, 0, 9, 9, 256, 256);
-    FLASHING_HEART = Icon.sprite(ICONS_TEXTURE, 43, 0, 9, 9, 256, 256);
-    HALF_HEART = Icon.sprite(ICONS_TEXTURE, 61, 0, 9, 9, 256, 256);
-    HEART = Icon.sprite(ICONS_TEXTURE, 52, 0, 9, 9, 256, 256);
-    HEART_SIZE = 16;
-    X_OFFSET = 7;
-  }
+  private static final ResourceLocation ICONS_TEXTURE = Laby.getLabyAPI().getMinecraft()
+      .getResources().getResourceLocationFactory()
+      .createMinecraft("textures/gui/icons.png"); //TODO Move to Core
+  private static final Icon EMPTY_HEART = Icon.sprite(ICONS_TEXTURE, 16, 0, 9, 9, 256, 256);
+  private static final Icon FLASHING_HEART = Icon.sprite(ICONS_TEXTURE, 43, 0, 9, 9, 256, 256);
+  private static final Icon HALF_HEART = Icon.sprite(ICONS_TEXTURE, 61, 0, 9, 9, 256, 256);
+  private static final Icon HEART = Icon.sprite(ICONS_TEXTURE, 52, 0, 9, 9, 256, 256);
+  private static final int HEART_SIZE = 16;
+  private static final int X_OFFSET = 7;
 
   private final Map<Player, Integer> previousHealth;
   private final Map<Player, Long[][]> flashingHearts;
@@ -47,14 +37,13 @@ public class HeartRenderer { //TODO Add to Core
   /**
    * Render a players hearts
    *
-   * @param stack       the stack
-   * @param x           the x coordinate
-   * @param y           the y coordinate
-   * @param player      the player
-   * @param renderEmpty rendering of empty hearts
+   * @param stack  the stack
+   * @param x      the x coordinate
+   * @param y      the y coordinate
+   * @param player the player
    */
-  public void render(Stack stack, int x, int y, Player player, boolean renderEmpty) {
-    render(stack, x, y, 10, player, renderEmpty);
+  public void render(Stack stack, int x, int y, Player player, int health) {
+    render(stack, x, y, (int) Math.ceil(player.getMaximalHealth()), player, health);
   }
 
   /**
@@ -63,17 +52,14 @@ public class HeartRenderer { //TODO Add to Core
    * @param stack       the stack
    * @param x           the x coordinate
    * @param y           the y coordinate
-   * @param maxHearts   the max hearts
+   * @param maxHearts   the max number of hearts displayed
    * @param player      the player
-   * @param renderEmpty rendering of empty hearts
    */
   public void render(Stack stack, int x, int y, int maxHearts,
-      Player player, boolean renderEmpty) { //TODO Include Absorption Hearts
-    int health = (int) Math.ceil(player.getHealth());
-    int maxHealth = (int) player.getMaximalHealth();
+      Player player, int health) { //TODO Include Absorption Hearts
     Icon backgroundHeart = calculateFlashingHeart(player, health);
 
-    for (int i = 1; i <= maxHealth; i++) {
+    for (int i = 1; i <= maxHearts; i++) {
       if (i % 2 == 0) {
         renderHeart(backgroundHeart, stack, i * X_OFFSET, y);
         if (i <= health) {
@@ -94,15 +80,23 @@ public class HeartRenderer { //TODO Add to Core
    * @param stack    the stack
    * @param x        the x coordinate
    * @param y        the y coordinate
-   * @param player   the player
-   * @param flashing flashing enabled
    */
-  public void renderSingleHeart(Stack stack, int x, int y, Player player, boolean flashing) {
-    Icon backgroundHeart = EMPTY_HEART;
-    if (flashing) {
-      int health = (int) Math.ceil(player.getHealth());
-      backgroundHeart = calculateFlashingHeart(player, health);
-    }
+  public void renderSingleHeart(Stack stack, int x, int y) {
+    renderHeart(EMPTY_HEART, stack, x, y);
+    renderHeart(HEART, stack, x, y);
+  }
+
+  /**
+   * Render a single flashing heart
+   *
+   * @param stack  the stack
+   * @param x      the x coordinate
+   * @param y      the y coordinate
+   * @param player the player
+   * @param health the players health
+   */
+  public void renderSingleFlashingHeart(Stack stack, int x, int y, Player player, int health) {
+    Icon backgroundHeart = calculateFlashingHeart(player, health);
 
     renderHeart(backgroundHeart, stack, x, y);
     renderHeart(HEART, stack, x, y);
@@ -112,9 +106,8 @@ public class HeartRenderer { //TODO Add to Core
     heart.render(stack, x, y, HEART_SIZE);
   }
 
-  private Icon calculateFlashingHeart(Player player,
-      int health) {
-    int prevHealth = previousHealth.computeIfAbsent(player, absent -> health);
+  private Icon calculateFlashingHeart(Player player, int health) {
+    int prevHealth = previousHealth.getOrDefault(player, health);
     previousHealth.put(player, health);
     Long[][] flashing = flashingHearts.get(player);
     if (health == prevHealth && Objects.isNull(flashing)) {

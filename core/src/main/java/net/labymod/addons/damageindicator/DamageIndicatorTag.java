@@ -1,4 +1,4 @@
-package net.labymod.addons.damageindicator.util;
+package net.labymod.addons.damageindicator;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -13,7 +13,7 @@ import net.labymod.api.client.render.matrix.Stack;
 /**
  * The damage indicator tag renderer.
  */
-public class DamageIndicatorTag implements TagRenderer {
+final class DamageIndicatorTag implements TagRenderer {
 
   private final LabyAPI labyAPI;
   private final ComponentRenderer componentRenderer;
@@ -23,7 +23,6 @@ public class DamageIndicatorTag implements TagRenderer {
   private DamageIndicatorTag(LabyAPI labyAPI, DamageIndicatorConfiguration configuration) {
     this.labyAPI = labyAPI;
     this.configuration = configuration;
-
     componentRenderer = labyAPI.getComponentRenderer();
     heartRenderer = labyAPI.getInjected(HeartRenderer.class);
   }
@@ -42,9 +41,10 @@ public class DamageIndicatorTag implements TagRenderer {
 
   @Override
   public void render(Stack stack, Player player) { //TODO Implement Configuration
-    //componentRenderer.renderComponent(stack, getRenderableComponent(player), 0, 0, 0, true);
-    heartRenderer.render(stack, 0, 0, 10, player, true);
-
+    int health = (int) Math.ceil(player.getHealth());
+    //componentRenderer.renderComponent(stack, getRenderableComponent(player, health), 0, 0, 0, true);
+    //heartRenderer.renderSingleHeart(stack, 25, 0, player, health, true);
+    heartRenderer.render(stack, 0, 0, player, health);
   }
 
   @Override
@@ -67,7 +67,7 @@ public class DamageIndicatorTag implements TagRenderer {
     return 0.8F;
   }
 
-  private RenderableComponent getRenderableComponent(Player player) {
+  private RenderableComponent getRenderableComponent(Player player, int health) {
     String text = "";
 
     //AMOUNT
@@ -75,7 +75,7 @@ public class DamageIndicatorTag implements TagRenderer {
     //   text = String.valueOf(health);
 
     //PERCENTAGE
-    double percentage = player.getHealth() * 5D;
+    int percentage = health * 5;
     text = percentage + "%";
 
     return RenderableComponent.of(Component.text(text, NamedTextColor.WHITE));
