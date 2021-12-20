@@ -12,10 +12,10 @@ import net.labymod.api.configuration.loader.impl.AddonConfig;
 public final class DamageIndicatorConfiguration extends AddonConfig {
 
   @SwitchSetting
-  private final boolean enabled = true;
+  private boolean enabled = true;
 
   @DropdownSetting
-  private final DisplayType displayType = DisplayType.HEALTH_BAR;
+  private DisplayType displayType = DisplayType.HEALTH_BAR;
 
   @Override
   public boolean isEnabled() {
