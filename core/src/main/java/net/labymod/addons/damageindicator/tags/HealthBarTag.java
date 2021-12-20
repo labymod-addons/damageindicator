@@ -1,14 +1,16 @@
-package net.labymod.addons.damageindicator;
+package net.labymod.addons.damageindicator.tags;
 
+import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
+import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
 import net.labymod.addons.damageindicator.api.HealthRendererProvider;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 
 /**
- * The damage indicator tag renderer.
+ * The damage indicator health bar tag renderer.
  */
-final class HealthBarTag implements TagRenderer {
+public final class HealthBarTag implements TagRenderer {
 
   private final DamageIndicatorConfiguration configuration;
 
@@ -27,13 +29,13 @@ final class HealthBarTag implements TagRenderer {
   }
 
   @Override
-  public void render(Stack stack, Player player) { //TODO Implement Configuration
+  public void render(Stack stack, Player player) {
     HealthRendererProvider.of(player).renderHealthBar(stack, 0, 0, 16);
   }
 
   @Override
   public boolean isVisible(Player player) {
-    return true;
+    return configuration.isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
