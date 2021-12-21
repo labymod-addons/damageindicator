@@ -1,4 +1,4 @@
-rootProject.name = "labymod4-addon-template"
+rootProject.name = "damageindicator"
 
 include(":api")
 include(":core")
