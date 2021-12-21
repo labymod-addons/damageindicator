@@ -2,7 +2,6 @@ package net.labymod.addons.damageindicator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import net.labymod.addons.damageindicator.api.HealthRendererProvider;
 import net.labymod.addons.damageindicator.tags.HealthAmountTag;
 import net.labymod.addons.damageindicator.tags.HealthBarTag;
 import net.labymod.addons.damageindicator.tags.HealthPercentageTag;
@@ -38,7 +37,7 @@ public final class DamageIndicator {
     this.labyAPI = labyAPI;
     this.categoryRegistry = categoryRegistry;
 
-    eventBus.registerListener(this, HealthRendererProvider.class); //TODO Move to Core
+//    eventBus.registerListener(this, HealthRendererProvider.class); //TODO Move to Core
   }
 
   /**
@@ -63,7 +62,7 @@ public final class DamageIndicator {
 
     TagRegistry tagRegistry = labyAPI.getNameTagService();
     tagRegistry.register("di_healthbar", PositionType.ABOVE_NAME,
-        HealthBarTag.create(configuration));
+        HealthBarTag.create(labyAPI.getResourceRenderer(), configuration));
     tagRegistry.register("di_percentage", PositionType.ABOVE_NAME,
         HealthPercentageTag.create(labyAPI, configuration));
     tagRegistry.register("di_amount", PositionType.ABOVE_NAME,

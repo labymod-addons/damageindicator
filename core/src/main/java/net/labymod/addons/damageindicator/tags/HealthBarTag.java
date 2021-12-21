@@ -2,9 +2,9 @@ package net.labymod.addons.damageindicator.tags;
 
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
-import net.labymod.addons.damageindicator.api.HealthRendererProvider;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
+import net.labymod.api.client.render.draw.ResourceRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 
 /**
@@ -12,9 +12,12 @@ import net.labymod.api.client.render.matrix.Stack;
  */
 public final class HealthBarTag implements TagRenderer {
 
+  private final ResourceRenderer resourceRenderer;
   private final DamageIndicatorConfiguration configuration;
 
-  private HealthBarTag(DamageIndicatorConfiguration configuration) {
+  private HealthBarTag(ResourceRenderer resourceRenderer,
+      DamageIndicatorConfiguration configuration) {
+    this.resourceRenderer = resourceRenderer;
     this.configuration = configuration;
   }
 
@@ -24,13 +27,14 @@ public final class HealthBarTag implements TagRenderer {
    * @param configuration the configuration
    * @return the damage indicator tag
    */
-  public static HealthBarTag create(DamageIndicatorConfiguration configuration) {
-    return new HealthBarTag(configuration);
+  public static HealthBarTag create(ResourceRenderer resourceRenderer,
+      DamageIndicatorConfiguration configuration) {
+    return new HealthBarTag(resourceRenderer, configuration);
   }
 
   @Override
   public void render(Stack stack, Player player) {
-    HealthRendererProvider.of(player).renderHealthBar(stack, 0, 0, 16);
+    resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, 0, 0, 16);
   }
 
   @Override
@@ -40,7 +44,7 @@ public final class HealthBarTag implements TagRenderer {
 
   @Override
   public float getWidth(Player player) {
-    return HealthRendererProvider.of(player).getWidth(16);
+    return resourceRenderer.getEntityHeartRenderer(player).getWidth(16);
   }
 
   @Override

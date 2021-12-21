@@ -3,10 +3,10 @@ package net.labymod.addons.damageindicator.tags;
 import net.kyori.adventure.text.Component;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
-import net.labymod.addons.damageindicator.api.HealthRendererProvider;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
+import net.labymod.api.client.render.draw.ResourceRenderer;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.matrix.Stack;
 
@@ -16,11 +16,14 @@ import net.labymod.api.client.render.matrix.Stack;
 public class HealthPercentageTag extends NameTag {
 
   private final LabyAPI labyAPI;
+  private final ResourceRenderer resourceRenderer;
   private final DamageIndicatorConfiguration configuration;
 
   private HealthPercentageTag(LabyAPI labyAPI, DamageIndicatorConfiguration configuration) {
     this.labyAPI = labyAPI;
     this.configuration = configuration;
+
+    resourceRenderer = labyAPI.getResourceRenderer();
   }
 
   /**
@@ -38,7 +41,7 @@ public class HealthPercentageTag extends NameTag {
   public void render(Stack stack, Player player) {
     super.render(stack, player);
     int startX = labyAPI.getComponentRenderer().width(getComponent(player)) + 2;
-    HealthRendererProvider.of(player).renderHealthBar(stack, startX, 1, 8, 2, 2);
+    resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, startX, 1, 8, 2, 2);
   }
 
   @Override
