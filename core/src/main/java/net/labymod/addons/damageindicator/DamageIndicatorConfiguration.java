@@ -9,6 +9,7 @@ import net.labymod.api.configuration.loader.impl.AddonConfig;
  * The damage indicator configuration.
  */
 @ConfigName("settings")
+@SuppressWarnings("FieldMayBeFinal")
 public final class DamageIndicatorConfiguration extends AddonConfig {
 
   @SwitchSetting
@@ -19,15 +20,15 @@ public final class DamageIndicatorConfiguration extends AddonConfig {
 
   @Override
   public boolean isEnabled() {
-    return enabled;
+    return this.enabled;
   }
 
   public DisplayType getDisplayType() {
-    return displayType;
+    return this.displayType;
   }
 
   public boolean isVisible(DisplayType value) {
-    return isEnabled() && displayType == value;
+    return this.isEnabled() && this.displayType == value;
   }
 
   public enum DisplayType {

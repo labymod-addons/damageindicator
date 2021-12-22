@@ -34,17 +34,17 @@ public final class HealthBarTag implements TagRenderer {
 
   @Override
   public void render(Stack stack, Player player) {
-    resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, 0, 0, 16);
+    this.resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, 0, 0, 16);
   }
 
   @Override
   public boolean isVisible(Player player) {
-    return configuration.isVisible(DisplayType.HEALTH_BAR);
+    return this.configuration.isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
   public float getWidth(Player player) {
-    return resourceRenderer.getEntityHeartRenderer(player).getWidth(16);
+    return this.resourceRenderer.getEntityHeartRenderer(player).getWidth(16);
   }
 
   @Override

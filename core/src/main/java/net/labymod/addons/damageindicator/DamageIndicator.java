@@ -1,7 +1,5 @@
 package net.labymod.addons.damageindicator;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.labymod.addons.damageindicator.tags.HealthAmountTag;
 import net.labymod.addons.damageindicator.tags.HealthBarTag;
 import net.labymod.addons.damageindicator.tags.HealthPercentageTag;
@@ -18,6 +16,9 @@ import net.labymod.api.event.client.lifecycle.GameInitializeEvent;
 import net.labymod.api.event.client.lifecycle.GameInitializeEvent.Lifecycle;
 import net.labymod.api.event.labymod.config.ConfigurationSaveEvent;
 import net.labymod.api.models.addon.annotation.AddonMain;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * The damage indicator addon main class
@@ -36,8 +37,6 @@ public final class DamageIndicator {
       SettingCategoryRegistry categoryRegistry) {
     this.labyAPI = labyAPI;
     this.categoryRegistry = categoryRegistry;
-
-//    eventBus.registerListener(this, HealthRendererProvider.class); //TODO Move to Core
   }
 
   /**
@@ -51,22 +50,22 @@ public final class DamageIndicator {
       return;
     }
 
-    ConfigurationLoader configurationLoader = labyAPI.getConfigurationLoader();
+    ConfigurationLoader configurationLoader = this.labyAPI.getConfigurationLoader();
     try {
-      configuration = configurationLoader.load(DamageIndicatorConfiguration.class);
-      SettingsRegistry registry = configuration.initializeRegistry();
-      categoryRegistry.register(registry.getId(), registry);
+      this.configuration = configurationLoader.load(DamageIndicatorConfiguration.class);
+      SettingsRegistry registry = this.configuration.initializeRegistry();
+      this.categoryRegistry.register(registry.getId(), registry);
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    TagRegistry tagRegistry = labyAPI.getNameTagService();
+    TagRegistry tagRegistry = this.labyAPI.getNameTagService();
     tagRegistry.register("di_healthbar", PositionType.ABOVE_NAME,
-        HealthBarTag.create(labyAPI.getResourceRenderer(), configuration));
+        HealthBarTag.create(this.labyAPI.getResourceRenderer(), this.configuration));
     tagRegistry.register("di_percentage", PositionType.ABOVE_NAME,
-        HealthPercentageTag.create(labyAPI, configuration));
+        HealthPercentageTag.create(this.labyAPI, this.configuration));
     tagRegistry.register("di_amount", PositionType.ABOVE_NAME,
-        HealthAmountTag.create(labyAPI, configuration));
+        HealthAmountTag.create(this.labyAPI, this.configuration));
   }
 
   /**

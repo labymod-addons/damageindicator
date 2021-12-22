@@ -23,7 +23,7 @@ public class HealthPercentageTag extends NameTag {
     this.labyAPI = labyAPI;
     this.configuration = configuration;
 
-    resourceRenderer = labyAPI.getResourceRenderer();
+    this.resourceRenderer = labyAPI.getResourceRenderer();
   }
 
   /**
@@ -40,18 +40,18 @@ public class HealthPercentageTag extends NameTag {
   @Override
   public void render(Stack stack, Player player) {
     super.render(stack, player);
-    int startX = labyAPI.getComponentRenderer().width(getComponent(player)) + 2;
-    resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, startX, 1, 8, 2, 2);
+    int startX = this.labyAPI.getComponentRenderer().width(this.getComponent(player)) + 2;
+    this.resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, startX, 1, 8, 2, 2);
   }
 
   @Override
   protected RenderableComponent getRenderableComponent(Player player) {
-    return RenderableComponent.of(getComponent(player));
+    return RenderableComponent.of(this.getComponent(player));
   }
 
   @Override
   public boolean isVisible(Player player) {
-    return configuration.isVisible(DisplayType.PERCENT);
+    return this.configuration.isVisible(DisplayType.PERCENT);
   }
 
   @Override
