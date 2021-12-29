@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
 import net.labymod.api.LabyAPI;
-import net.labymod.api.client.entity.player.Player;
+import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.draw.ResourceRenderer;
 import net.labymod.api.client.render.font.RenderableComponent;
@@ -38,30 +38,30 @@ public class HealthAmountTag extends NameTag {
   }
 
   @Override
-  public void render(Stack stack, Player player) {
-    super.render(stack, player);
-    int startX = this.labyAPI.getComponentRenderer().width(this.getComponent(player)) + 2;
-    this.resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, startX, 1, 8, 2, 2);
+  public void render(Stack stack, LivingEntity entity) {
+    super.render(stack, entity);
+    int startX = this.labyAPI.getComponentRenderer().width(this.getComponent(entity)) + 2;
+    this.resourceRenderer.getEntityHeartRenderer(entity).renderHealthBar(stack, startX, 1, 8, 2, 2);
   }
 
   @Override
-  protected RenderableComponent getRenderableComponent(Player player) {
-    return RenderableComponent.of(this.getComponent(player));
+  protected RenderableComponent getRenderableComponent(LivingEntity entity) {
+    return RenderableComponent.of(this.getComponent(entity));
   }
 
   @Override
-  public boolean isVisible(Player player) {
+  public boolean isVisible(LivingEntity entity) {
     return this.configuration.isVisible(DisplayType.AMOUNT);
   }
 
   @Override
-  public float getWidth(Player player) {
-    return super.getWidth(player) + 9;
+  public float getWidth(LivingEntity entity) {
+    return super.getWidth(entity) + 9;
   }
 
-  private Component getComponent(Player player) {
-    double health = Math.ceil(player.getHealth()) / 2;
-    double maxHealth = Math.ceil(player.getMaximalHealth()) / 2;
+  private Component getComponent(LivingEntity entity) {
+    double health = Math.ceil(entity.getHealth()) / 2;
+    double maxHealth = Math.ceil(entity.getMaximalHealth()) / 2;
     return Component.text(this.formatDouble(health) + "/" + this.formatDouble(maxHealth));
   }
 

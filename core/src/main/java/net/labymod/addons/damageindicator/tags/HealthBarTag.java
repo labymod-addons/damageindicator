@@ -2,7 +2,7 @@ package net.labymod.addons.damageindicator.tags;
 
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
-import net.labymod.api.client.entity.player.Player;
+import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
 import net.labymod.api.client.render.draw.ResourceRenderer;
 import net.labymod.api.client.render.matrix.Stack;
@@ -33,27 +33,27 @@ public final class HealthBarTag implements TagRenderer {
   }
 
   @Override
-  public void render(Stack stack, Player player) {
-    this.resourceRenderer.getEntityHeartRenderer(player).renderHealthBar(stack, 0, 0, 16);
+  public void render(Stack stack, LivingEntity entity) {
+    this.resourceRenderer.getEntityHeartRenderer(entity).renderHealthBar(stack, 0, 0, 16);
   }
 
   @Override
-  public boolean isVisible(Player player) {
+  public boolean isVisible(LivingEntity entity) {
     return this.configuration.isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
-  public float getWidth(Player player) {
-    return this.resourceRenderer.getEntityHeartRenderer(player).getWidth(16);
+  public float getWidth(LivingEntity entity) {
+    return this.resourceRenderer.getEntityHeartRenderer(entity).getWidth(16);
   }
 
   @Override
-  public float getHeight(Player player) {
+  public float getHeight(LivingEntity entity) {
     return 16F;
   }
 
   @Override
-  public float getScale(Player player) {
+  public float getScale(LivingEntity entity) {
     return 0.6F;
   }
 }
