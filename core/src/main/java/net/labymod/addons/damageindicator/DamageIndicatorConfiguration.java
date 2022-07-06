@@ -2,15 +2,15 @@ package net.labymod.addons.damageindicator;
 
 import net.labymod.api.client.gui.screen.widget.widgets.input.DropdownWidget.DropdownSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
-import net.labymod.api.configuration.loader.impl.AddonConfig;
 
 /**
  * The damage indicator configuration.
  */
 @ConfigName("settings")
 @SuppressWarnings("FieldMayBeFinal")
-public final class DamageIndicatorConfiguration extends AddonConfig {
+public final class DamageIndicatorConfiguration extends Config {
 
   @SwitchSetting
   private boolean enabled = true;
@@ -18,7 +18,6 @@ public final class DamageIndicatorConfiguration extends AddonConfig {
   @DropdownSetting
   private DisplayType displayType = DisplayType.HEALTH_BAR;
 
-  @Override
   public boolean isEnabled() {
     return this.enabled;
   }

@@ -3,10 +3,11 @@ package net.labymod.addons.damageindicator.tags;
 import net.kyori.adventure.text.Component;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
-import net.labymod.api.LabyAPI;
+import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
-import net.labymod.api.client.render.draw.ResourceRenderer;
+import net.labymod.api.client.render.RenderPipeline;
+import net.labymod.api.client.render.draw.EntityHeartRenderer;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.matrix.Stack;
 
@@ -15,33 +16,31 @@ import net.labymod.api.client.render.matrix.Stack;
  */
 public class HealthAmountTag extends NameTag {
 
-  private final LabyAPI labyAPI;
-  private final ResourceRenderer resourceRenderer;
-  private final DamageIndicatorConfiguration configuration;
+  private final LabyAddon<DamageIndicatorConfiguration> labyAddon;
 
-  private HealthAmountTag(LabyAPI labyAPI, DamageIndicatorConfiguration configuration) {
-    this.labyAPI = labyAPI;
-    this.configuration = configuration;
-
-    this.resourceRenderer = labyAPI.getResourceRenderer();
+  private HealthAmountTag(LabyAddon<DamageIndicatorConfiguration> labyAddon) {
+    this.labyAddon = labyAddon;
   }
 
   /**
    * Factory method of the class
    *
-   * @param configuration the configuration
+   * @param labyAddon the addon
    * @return the damage indicator tag
    */
-  public static HealthAmountTag create(LabyAPI labyAPI,
-      DamageIndicatorConfiguration configuration) {
-    return new HealthAmountTag(labyAPI, configuration);
+  public static HealthAmountTag create(LabyAddon<DamageIndicatorConfiguration> labyAddon) {
+    return new HealthAmountTag(labyAddon);
   }
 
   @Override
   public void render(Stack stack, LivingEntity entity) {
     super.render(stack, entity);
-    int startX = this.labyAPI.getComponentRenderer().width(this.getComponent(entity)) + 2;
-    this.resourceRenderer.getEntityHeartRenderer(entity).renderHealthBar(stack, startX, 1, 8, 2, 2);
+    RenderPipeline renderPipeline = this.labyAddon.labyAPI().renderPipeline();
+
+    int startX = renderPipeline.componentRenderer().width(this.getComponent(entity)) + 2;
+    EntityHeartRenderer heartRenderer = renderPipeline.resourceRenderer()
+        .getEntityHeartRenderer(entity);
+    heartRenderer.renderHealthBar(stack, startX, 1, 8, 2, 2);
   }
 
   @Override
@@ -51,7 +50,7 @@ public class HealthAmountTag extends NameTag {
 
   @Override
   public boolean isVisible(LivingEntity entity) {
-    return this.configuration.isVisible(DisplayType.AMOUNT);
+    return this.labyAddon.configuration().isVisible(DisplayType.AMOUNT);
   }
 
   @Override

@@ -27,7 +27,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("net.labymod.gradle", "addon", "0.1.27")
+        classpath("net.labymod.gradle", "addon", "0.2.28")
     }
 }
 
@@ -53,18 +53,28 @@ subprojects {
     }
 }
 
+createReleaseJar {
+    // Exclude a project from the release jar generation process
+    exclude(project(":versions"))
+
+    // You can also exclude version implementation if your addon
+    // does not require version implementation
+    //
+    // exclude(project(":v1_8"))
+    // exclude(project(":v1_17"))
+    // exclude(project(":v1_18"))
+}
+
 addon {
     addonInfo {
-        id("damageindicator")
+        namespace("damageindicator")
         displayName("DamageIndicator")
-        author("LabyMod")
-        version(System.getenv().getOrDefault("VERSION", "0.0."))
+        author("LabyMedia GmbH")
+        version(System.getenv().getOrDefault("VERSION", "0.0.0"))
     }
 
     dev {
-        releaseChannel = "feature-nametag"
+        releaseChannel = "improvement-addon-api"
         commitReference = "unknown"
     }
-
-    internalRelease()
 }

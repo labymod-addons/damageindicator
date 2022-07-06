@@ -1,0 +1,13 @@
+{
+  "settings": {
+    "damageindicator": {
+      "name": "DamageIndicator",
+      "enabled": {
+        "name": "Enabled"
+      },
+      "displayType": {
+        "name": "Display Type"
+      }
+    }
+  }
+}

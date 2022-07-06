@@ -2,9 +2,9 @@ package net.labymod.addons.damageindicator.tags;
 
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
-import net.labymod.api.client.render.draw.ResourceRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 
 /**
@@ -12,39 +12,37 @@ import net.labymod.api.client.render.matrix.Stack;
  */
 public final class HealthBarTag implements TagRenderer {
 
-  private final ResourceRenderer resourceRenderer;
-  private final DamageIndicatorConfiguration configuration;
+  private final LabyAddon<DamageIndicatorConfiguration> labyAddon;
 
-  private HealthBarTag(ResourceRenderer resourceRenderer,
-      DamageIndicatorConfiguration configuration) {
-    this.resourceRenderer = resourceRenderer;
-    this.configuration = configuration;
+  private HealthBarTag(LabyAddon<DamageIndicatorConfiguration> labyAddon) {
+    this.labyAddon = labyAddon;
   }
 
   /**
    * Factory method of the class
    *
-   * @param configuration the configuration
+   * @param labyAddon the addon
    * @return the damage indicator tag
    */
-  public static HealthBarTag create(ResourceRenderer resourceRenderer,
-      DamageIndicatorConfiguration configuration) {
-    return new HealthBarTag(resourceRenderer, configuration);
+  public static HealthBarTag create(LabyAddon<DamageIndicatorConfiguration> labyAddon) {
+    return new HealthBarTag(labyAddon);
   }
 
   @Override
   public void render(Stack stack, LivingEntity entity) {
-    this.resourceRenderer.getEntityHeartRenderer(entity).renderHealthBar(stack, 0, 0, 16);
+    this.labyAddon.labyAPI().renderPipeline().resourceRenderer().getEntityHeartRenderer(entity)
+        .renderHealthBar(stack, 0, 0, 16);
   }
 
   @Override
   public boolean isVisible(LivingEntity entity) {
-    return this.configuration.isVisible(DisplayType.HEALTH_BAR);
+    return this.labyAddon.configuration().isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
   public float getWidth(LivingEntity entity) {
-    return this.resourceRenderer.getEntityHeartRenderer(entity).getWidth(16);
+    return this.labyAddon.labyAPI().renderPipeline().resourceRenderer()
+        .getEntityHeartRenderer(entity).getWidth(16);
   }
 
   @Override
