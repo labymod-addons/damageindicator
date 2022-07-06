@@ -77,4 +77,6 @@ addon {
         releaseChannel = "improvement-addon-api"
         commitReference = "unknown"
     }
+
+    internalRelease()
 }
