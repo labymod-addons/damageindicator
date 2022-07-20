@@ -44,7 +44,7 @@ public class HealthAmountTag extends NameTag {
   }
 
   @Override
-  protected RenderableComponent getRenderableComponent(LivingEntity entity) {
+  protected RenderableComponent renderableComponent(LivingEntity entity) {
     return RenderableComponent.of(this.getComponent(entity));
   }
 
