@@ -1,6 +1,6 @@
 package net.labymod.addons.damageindicator;
 
-import net.labymod.api.client.gui.screen.widget.widgets.input.DropdownWidget.DropdownSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.OldDropdownWidget.DropdownSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
