@@ -1,8 +1,7 @@
 package net.labymod.addons.damageindicator.tags;
 
-import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
+import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
-import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
 import net.labymod.api.client.render.matrix.Stack;
@@ -12,37 +11,37 @@ import net.labymod.api.client.render.matrix.Stack;
  */
 public final class HealthBarTag implements TagRenderer {
 
-  private final LabyAddon<DamageIndicatorConfiguration> labyAddon;
+  private final DamageIndicator addon;
 
-  private HealthBarTag(LabyAddon<DamageIndicatorConfiguration> labyAddon) {
-    this.labyAddon = labyAddon;
+  private HealthBarTag(DamageIndicator addon) {
+    this.addon = addon;
   }
 
   /**
    * Factory method of the class
    *
-   * @param labyAddon the addon
+   * @param addon the addon
    * @return the damage indicator tag
    */
-  public static HealthBarTag create(LabyAddon<DamageIndicatorConfiguration> labyAddon) {
-    return new HealthBarTag(labyAddon);
+  public static HealthBarTag create(DamageIndicator addon) {
+    return new HealthBarTag(addon);
   }
 
   @Override
   public void render(Stack stack, LivingEntity entity) {
-    this.labyAddon.labyAPI().renderPipeline().resourceRenderer().getEntityHeartRenderer(entity)
-        .renderHealthBar(stack, 0, 0, 16);
+    this.addon.fixDepth(entity, resourceRenderer -> resourceRenderer.entityHeartRenderer(entity)
+        .renderHealthBar(stack, 0, 0, 16));
   }
 
   @Override
   public boolean isVisible(LivingEntity entity) {
-    return this.labyAddon.configuration().isVisible(DisplayType.HEALTH_BAR);
+    return this.addon.configuration().isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
   public float getWidth(LivingEntity entity) {
-    return this.labyAddon.labyAPI().renderPipeline().resourceRenderer()
-        .getEntityHeartRenderer(entity).getWidth(16);
+    return this.addon.labyAPI().renderPipeline().resourceRenderer()
+        .entityHeartRenderer(entity).getWidth(16);
   }
 
   @Override
@@ -52,6 +51,6 @@ public final class HealthBarTag implements TagRenderer {
 
   @Override
   public float getScale(LivingEntity entity) {
-    return 0.6F;
+    return 0.4F;
   }
 }
