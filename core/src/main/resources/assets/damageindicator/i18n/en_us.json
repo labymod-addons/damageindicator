@@ -1,12 +1,19 @@
 {
-  "settings": {
-    "damageindicator": {
-      "name": "DamageIndicator",
-      "enabled": {
-        "name": "Enabled"
-      },
-      "displayType": {
-        "name": "Display Type"
+  "labymod": {
+    "settings": {
+      "damageindicator": {
+        "settings": {
+          "name": "DamageIndicator",
+          "enabled": {
+            "name": "Enabled"
+          },
+          "displayType": {
+            "name": "Display Type",
+            "healthBar": "Health Bar",
+            "amount": "Amount",
+            "percent": "Percent"
+          }
+        }
       }
     }
   }

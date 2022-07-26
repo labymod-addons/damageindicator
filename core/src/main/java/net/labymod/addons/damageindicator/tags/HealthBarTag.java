@@ -4,6 +4,7 @@ import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
+import net.labymod.api.client.render.RenderPipeline;
 import net.labymod.api.client.render.matrix.Stack;
 
 /**
@@ -29,8 +30,10 @@ public final class HealthBarTag implements TagRenderer {
 
   @Override
   public void render(Stack stack, LivingEntity entity) {
-    this.addon.fixDepth(entity, resourceRenderer -> resourceRenderer.entityHeartRenderer(entity)
-        .renderHealthBar(stack, 0, 0, 16));
+    RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
+    renderPipeline.renderSeeThrough(entity,
+        () -> renderPipeline.resourceRenderer().entityHeartRenderer(entity)
+            .renderHealthBar(stack, 0, 0, 16));
   }
 
   @Override

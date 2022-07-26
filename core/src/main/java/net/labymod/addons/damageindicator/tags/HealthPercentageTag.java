@@ -34,10 +34,10 @@ public class HealthPercentageTag extends NameTag {
   public void render(Stack stack, LivingEntity entity) {
     super.render(stack, entity);
     RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
-
     int startX = renderPipeline.componentRenderer().width(this.getComponent(entity)) + 2;
-    this.addon.fixDepth(entity, resourceRenderer -> resourceRenderer.entityHeartRenderer(entity)
-        .renderHealthBar(stack, startX, this.getHeight(entity) / 2 - 4, 8, 2, 2));
+    renderPipeline.renderSeeThrough(entity,
+        () -> renderPipeline.resourceRenderer().entityHeartRenderer(entity)
+            .renderHealthBar(stack, startX, this.getHeight(entity) / 2 - 4, 8, 2, 2));
   }
 
   @Override
