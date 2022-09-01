@@ -2,6 +2,7 @@ package net.labymod.addons.damageindicator.tags;
 
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
 import net.labymod.api.client.render.RenderPipeline;
@@ -29,31 +30,31 @@ public final class HealthBarTag implements TagRenderer {
   }
 
   @Override
-  public void render(Stack stack, LivingEntity entity) {
+  public void render(Stack stack, Entity entity) {
     RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
-    renderPipeline.renderSeeThrough(entity,
-        () -> renderPipeline.resourceRenderer().entityHeartRenderer(entity)
-            .renderHealthBar(stack, 0, 0, 16));
+    renderPipeline.renderSeeThrough(entity, () -> renderPipeline.resourceRenderer()
+        .entityHeartRenderer((LivingEntity) entity).renderHealthBar(stack, 0, 0, 16));
   }
 
   @Override
-  public boolean isVisible(LivingEntity entity) {
-    return this.addon.configuration().isVisible(DisplayType.HEALTH_BAR);
+  public boolean isVisible(Entity entity) {
+    return entity instanceof LivingEntity && this.addon.configuration()
+        .isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
-  public float getWidth(LivingEntity entity) {
+  public float getWidth(Entity entity) {
     return this.addon.labyAPI().renderPipeline().resourceRenderer()
-        .entityHeartRenderer(entity).getWidth(16);
+        .entityHeartRenderer((LivingEntity) entity).getWidth(16);
   }
 
   @Override
-  public float getHeight(LivingEntity entity) {
+  public float getHeight(Entity entity) {
     return 16F;
   }
 
   @Override
-  public float getScale(LivingEntity entity) {
+  public float getScale(Entity entity) {
     return 0.4F;
   }
 }

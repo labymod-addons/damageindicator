@@ -3,6 +3,7 @@ package net.labymod.addons.damageindicator.tags;
 import net.kyori.adventure.text.Component;
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.RenderPipeline;
@@ -31,32 +32,42 @@ public class HealthPercentageTag extends NameTag {
   }
 
   @Override
-  public void render(Stack stack, LivingEntity entity) {
+  public void render(Stack stack, Entity entity) {
     super.render(stack, entity);
     RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
-    int startX = renderPipeline.componentRenderer().width(this.getComponent(entity)) + 2;
+    LivingEntity livingEntity = (LivingEntity) entity;
+    int startX = renderPipeline.componentRenderer().width(this.getComponent(livingEntity)) + 2;
     renderPipeline.renderSeeThrough(entity,
-        () -> renderPipeline.resourceRenderer().entityHeartRenderer(entity)
-            .renderHealthBar(stack, startX, this.getHeight(entity) / 2 - 4, 8, 2, 2));
+        () -> renderPipeline.resourceRenderer()
+            .entityHeartRenderer(livingEntity).renderHealthBar(
+                stack,
+                startX,
+                this.getHeight(entity) / 2 - 4,
+                8,
+                2,
+                2
+            )
+    );
   }
 
   @Override
-  protected RenderableComponent renderableComponent(LivingEntity entity) {
-    return RenderableComponent.of(this.getComponent(entity));
+  protected RenderableComponent renderableComponent(Entity entity) {
+    return RenderableComponent.of(this.getComponent((LivingEntity) entity));
   }
 
   @Override
-  public boolean isVisible(LivingEntity entity) {
-    return this.addon.configuration().isVisible(DisplayType.PERCENT);
+  public boolean isVisible(Entity entity) {
+    return entity instanceof LivingEntity && this.addon.configuration()
+        .isVisible(DisplayType.PERCENT);
   }
 
   @Override
-  public float getWidth(LivingEntity entity) {
+  public float getWidth(Entity entity) {
     return super.getWidth(entity) + 9;
   }
 
   @Override
-  public float getScale(LivingEntity livingEntity) {
+  public float getScale(Entity livingEntity) {
     return .7F;
   }
 

@@ -62,7 +62,7 @@ addon {
     }
 
     dev {
-        releaseChannel = "improvement-addon-api"
+        releaseChannel = "fix-nametags"
         commitReference = "unknown"
     }
 

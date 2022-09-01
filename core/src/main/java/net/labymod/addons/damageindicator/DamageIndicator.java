@@ -29,9 +29,22 @@ public final class DamageIndicator extends LabyAddon<DamageIndicatorConfiguratio
 
   private void registerTags() {
     TagRegistry tagRegistry = this.labyAPI().tagRegistry();
-    tagRegistry.register("di_healthbar", PositionType.ABOVE_NAME, HealthBarTag.create(this));
-    tagRegistry.register("di_percentage", PositionType.ABOVE_NAME,
-        HealthPercentageTag.create(this));
-    tagRegistry.register("di_amount", PositionType.ABOVE_NAME, HealthAmountTag.create(this));
+    tagRegistry.register(
+        "di_healthbar",
+        PositionType.ABOVE_NAME,
+        HealthBarTag.create(this)
+    );
+
+    tagRegistry.register(
+        "di_percentage",
+        PositionType.ABOVE_NAME,
+        HealthPercentageTag.create(this)
+    );
+
+    tagRegistry.register(
+        "di_amount",
+        PositionType.ABOVE_NAME,
+        HealthAmountTag.create(this)
+    );
   }
 }
