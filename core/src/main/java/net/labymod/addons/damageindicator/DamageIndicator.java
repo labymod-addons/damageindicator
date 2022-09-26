@@ -33,13 +33,13 @@ import net.labymod.api.models.addon.annotation.AddonListener;
 public final class DamageIndicator extends LabyAddon<DamageIndicatorConfiguration> {
 
   @Override
-  private void enable() {
+  public void enable() {
     this.registerSettingCategory();
     this.registerTags();
   }
 
   @Override
-  private Class<DamageIndicatorConfiguration> configurationClass() {
+  protected Class<DamageIndicatorConfiguration> configurationClass() {
     return DamageIndicatorConfiguration.class;
   }
 
