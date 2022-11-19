@@ -30,7 +30,7 @@ import net.labymod.api.client.render.matrix.Stack;
  * The damage indicator percentage tag renderer.
  */
 public class HealthPercentageTag extends NameTag {
-
+  
   private final DamageIndicator addon;
 
   private HealthPercentageTag(DamageIndicator addon) {
@@ -52,7 +52,7 @@ public class HealthPercentageTag extends NameTag {
     super.render(stack, entity);
     RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
     LivingEntity livingEntity = (LivingEntity) entity;
-    int startX = renderPipeline.componentRenderer().width(this.getComponent(livingEntity)) + 2;
+    float startX = renderPipeline.componentRenderer().width(this.getComponent(livingEntity)) + 2;
     renderPipeline.renderSeeThrough(entity,
         () -> renderPipeline.resourceRenderer()
             .entityHeartRenderer(livingEntity).renderHealthBar(
