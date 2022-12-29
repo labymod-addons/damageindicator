@@ -20,14 +20,14 @@ import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.LivingEntity;
-import net.labymod.api.client.entity.player.tag.renderer.TagRenderer;
+import net.labymod.api.client.entity.player.tag.renderer.AbstractTagRenderer;
 import net.labymod.api.client.render.RenderPipeline;
 import net.labymod.api.client.render.matrix.Stack;
 
 /**
  * The damage indicator health bar tag renderer.
  */
-public final class HealthBarTag implements TagRenderer {
+public final class HealthBarTag extends AbstractTagRenderer {
 
   private final DamageIndicator addon;
 
@@ -53,24 +53,24 @@ public final class HealthBarTag implements TagRenderer {
   }
 
   @Override
-  public boolean isVisible(Entity entity) {
-    return entity instanceof LivingEntity && this.addon.configuration()
+  public boolean isVisible() {
+    return this.entity instanceof LivingEntity && this.addon.configuration()
         .isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
-  public float getWidth(Entity entity) {
+  public float getWidth() {
     return this.addon.labyAPI().renderPipeline().resourceRenderer()
-        .entityHeartRenderer((LivingEntity) entity).getWidth(16);
+        .entityHeartRenderer((LivingEntity) this.entity).getWidth(16);
   }
 
   @Override
-  public float getHeight(Entity entity) {
+  public float getHeight() {
     return 16F;
   }
 
   @Override
-  public float getScale(Entity entity) {
+  public float getScale() {
     return 0.4F;
   }
 }

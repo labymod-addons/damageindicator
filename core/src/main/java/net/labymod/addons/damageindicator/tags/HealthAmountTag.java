@@ -58,7 +58,7 @@ public class HealthAmountTag extends NameTag {
             .entityHeartRenderer(livingEntity).renderHealthBar(
                 stack,
                 startX,
-                this.getHeight(entity) / 2 - 4,
+                this.getHeight() / 2 - 4,
                 8,
                 2,
                 2
@@ -67,23 +67,22 @@ public class HealthAmountTag extends NameTag {
   }
 
   @Override
-  protected RenderableComponent renderableComponent(Entity entity) {
-    return RenderableComponent.of(this.getComponent((LivingEntity) entity));
+  protected RenderableComponent getRenderableComponent() {
+    if (!(this.entity instanceof LivingEntity) || !this.addon.configuration()
+        .isVisible(DisplayType.AMOUNT)) {
+      return null;
+    }
+
+    return RenderableComponent.of(this.getComponent((LivingEntity) this.entity));
   }
 
   @Override
-  public boolean isVisible(Entity entity) {
-    return entity instanceof LivingEntity && this.addon.configuration()
-        .isVisible(DisplayType.AMOUNT);
+  public float getWidth() {
+    return super.getWidth() + 9;
   }
 
   @Override
-  public float getWidth(Entity entity) {
-    return super.getWidth(entity) + 9;
-  }
-
-  @Override
-  public float getScale(Entity livingEntity) {
+  public float getScale() {
     return .7F;
   }
 
