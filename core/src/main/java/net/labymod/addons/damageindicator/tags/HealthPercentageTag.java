@@ -16,9 +16,9 @@
 
 package net.labymod.addons.damageindicator.tags;
 
-import net.kyori.adventure.text.Component;
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
