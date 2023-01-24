@@ -16,20 +16,18 @@
 
 package net.labymod.addons.damageindicator;
 
-import com.google.inject.Singleton;
 import net.labymod.addons.damageindicator.tags.HealthAmountTag;
 import net.labymod.addons.damageindicator.tags.HealthBarTag;
 import net.labymod.addons.damageindicator.tags.HealthPercentageTag;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
-import net.labymod.api.models.addon.annotation.AddonListener;
+import net.labymod.api.models.addon.annotation.AddonMain;
 
 /**
  * The damage indicator addon main class
  */
-@AddonListener
-@Singleton
+@AddonMain
 public final class DamageIndicator extends LabyAddon<DamageIndicatorConfiguration> {
 
   @Override
