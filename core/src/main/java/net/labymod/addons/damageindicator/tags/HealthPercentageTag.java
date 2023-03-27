@@ -53,9 +53,9 @@ public class HealthPercentageTag extends NameTag {
     RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
     LivingEntity livingEntity = (LivingEntity) entity;
     float startX = renderPipeline.componentRenderer().width(this.getComponent(livingEntity)) + 2;
-    renderPipeline.renderSeeThrough(entity,
-        () -> renderPipeline.resourceRenderer()
-            .entityHeartRenderer(livingEntity).renderHealthBar(
+    renderPipeline.renderNoneStandardNameTag(
+        entity,
+        () -> renderPipeline.resourceRenderer().entityHeartRenderer(livingEntity).renderHealthBar(
                 stack,
                 startX,
                 this.getHeight() / 2 - 4,
@@ -67,6 +67,11 @@ public class HealthPercentageTag extends NameTag {
   }
 
   @Override
+  protected boolean withDepthTest() {
+    return false;
+  }
+
+  @Override
   protected RenderableComponent getRenderableComponent() {
     if (!(this.entity instanceof LivingEntity) || !this.addon.configuration()
         .isVisible(DisplayType.PERCENT)) {
@@ -74,6 +79,11 @@ public class HealthPercentageTag extends NameTag {
     }
 
     return RenderableComponent.of(this.getComponent((LivingEntity) this.entity));
+  }
+
+  @Override
+  public boolean isVisible() {
+    return !this.entity.isCrouching() && super.isVisible();
   }
 
   @Override

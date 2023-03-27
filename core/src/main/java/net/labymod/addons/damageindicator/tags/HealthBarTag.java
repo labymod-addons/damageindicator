@@ -48,14 +48,19 @@ public final class HealthBarTag extends AbstractTagRenderer {
   @Override
   public void render(Stack stack, Entity entity) {
     RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
-    renderPipeline.renderSeeThrough(entity, () -> renderPipeline.resourceRenderer()
-        .entityHeartRenderer((LivingEntity) entity).renderHealthBar(stack, 0, 0, 16));
+    renderPipeline.renderNoneStandardNameTag(
+        entity,
+        () -> renderPipeline.resourceRenderer()
+            .entityHeartRenderer((LivingEntity) entity)
+            .renderHealthBar(stack, 0, 0, 16)
+    );
   }
 
   @Override
   public boolean isVisible() {
-    return this.entity instanceof LivingEntity && this.addon.configuration()
-        .isVisible(DisplayType.HEALTH_BAR);
+    return !this.entity.isCrouching() &&
+        this.entity instanceof LivingEntity &&
+        this.addon.configuration().isVisible(DisplayType.HEALTH_BAR);
   }
 
   @Override
