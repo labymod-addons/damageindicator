@@ -32,8 +32,9 @@ public final class DamageIndicatorConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
   @DropdownSetting
-  private final ConfigProperty<DisplayType> displayType = new ConfigProperty<>(
-      DisplayType.HEALTH_BAR);
+  private final ConfigProperty<DisplayType> displayType = ConfigProperty.createEnum(
+      DisplayType.HEALTH_BAR
+  );
 
   @Override
   public ConfigProperty<Boolean> enabled() {

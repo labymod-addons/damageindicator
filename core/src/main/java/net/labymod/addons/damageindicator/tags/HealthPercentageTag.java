@@ -19,84 +19,19 @@ package net.labymod.addons.damageindicator.tags;
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.LivingEntity;
-import net.labymod.api.client.entity.player.tag.tags.NameTag;
-import net.labymod.api.client.render.RenderPipeline;
-import net.labymod.api.client.render.font.RenderableComponent;
-import net.labymod.api.client.render.matrix.Stack;
 
 /**
  * The damage indicator percentage tag renderer.
  */
-public class HealthPercentageTag extends NameTag {
+public class HealthPercentageTag extends ComponentWithHeartTag {
 
-  private final DamageIndicator addon;
-
-  private HealthPercentageTag(DamageIndicator addon) {
-    this.addon = addon;
-  }
-
-  /**
-   * Factory method of the class
-   *
-   * @param labyAddon the addon
-   * @return the damage indicator tag
-   */
-  public static HealthPercentageTag create(DamageIndicator labyAddon) {
-    return new HealthPercentageTag(labyAddon);
+  public HealthPercentageTag(DamageIndicator damageIndicator) {
+    super(damageIndicator, DisplayType.PERCENT);
   }
 
   @Override
-  public void render(Stack stack, Entity entity) {
-    super.render(stack, entity);
-    RenderPipeline renderPipeline = this.addon.labyAPI().renderPipeline();
-    LivingEntity livingEntity = (LivingEntity) entity;
-    float startX = renderPipeline.componentRenderer().width(this.getComponent(livingEntity)) + 2;
-    renderPipeline.renderNoneStandardNameTag(
-        entity,
-        () -> renderPipeline.resourceRenderer().entityHeartRenderer(livingEntity).renderHealthBar(
-                stack,
-                startX,
-                this.getHeight() / 2 - 4,
-                8,
-                2,
-                2
-            )
-    );
-  }
-
-  @Override
-  protected boolean withDepthTest() {
-    return false;
-  }
-
-  @Override
-  protected RenderableComponent getRenderableComponent() {
-    if (!(this.entity instanceof LivingEntity) || !this.addon.configuration()
-        .isVisible(DisplayType.PERCENT)) {
-      return null;
-    }
-
-    return RenderableComponent.of(this.getComponent((LivingEntity) this.entity));
-  }
-
-  @Override
-  public boolean isVisible() {
-    return !this.entity.isCrouching() && super.isVisible();
-  }
-
-  @Override
-  public float getWidth() {
-    return super.getWidth() + 9;
-  }
-
-  @Override
-  public float getScale() {
-    return .7F;
-  }
-
-  private Component getComponent(LivingEntity entity) {
+  protected Component component(LivingEntity entity) {
     int health = (int) Math.ceil(entity.getHealth());
     int maxHealth = (int) Math.ceil(entity.getMaximalHealth());
     return Component.text(health * 100 / maxHealth + "%");

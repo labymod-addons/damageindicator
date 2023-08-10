@@ -19,55 +19,72 @@ package net.labymod.addons.damageindicator.tags;
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.LivingEntity;
-import net.labymod.api.client.entity.player.tag.renderer.AbstractTagRenderer;
+import net.labymod.api.client.entity.player.tag.tags.NameTag;
 import net.labymod.api.client.render.RenderPipeline;
 import net.labymod.api.client.render.draw.ResourceRenderer;
+import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.matrix.Stack;
 
-/**
- * The damage indicator health bar tag renderer.
- */
-public final class HealthBarTag extends AbstractTagRenderer {
+public abstract class ComponentWithHeartTag extends NameTag {
 
   private final RenderPipeline renderPipeline;
   private final ResourceRenderer resourceRenderer;
   private final DamageIndicatorConfiguration configuration;
+  private final DisplayType displayType;
+  private float startX;
 
-  public HealthBarTag(DamageIndicator damageIndicator) {
+  protected ComponentWithHeartTag(DamageIndicator damageIndicator, DisplayType displayType) {
     this.renderPipeline = damageIndicator.labyAPI().renderPipeline();
     this.resourceRenderer = this.renderPipeline.resourceRenderer();
     this.configuration = damageIndicator.configuration();
+    this.displayType = displayType;
   }
 
   @Override
   public void render(Stack stack, Entity entity) {
     RenderPipeline renderPipeline = this.renderPipeline;
-    renderPipeline.renderSeeThrough(entity, 0.0F, () ->
-        this.resourceRenderer.entityHeartRenderer((LivingEntity) entity)
-            .renderHealthBar(stack, 0, 0, 16)
+    renderPipeline.renderSeeThrough(entity, 0.0F, () -> {
+          super.render(stack, entity);
+          LivingEntity livingEntity = (LivingEntity) entity;
+          this.resourceRenderer.entityHeartRenderer(livingEntity).renderHealthBar(
+              stack,
+              this.startX,
+              this.getHeight() / 2 - 4,
+              8,
+              2,
+              2
+          );
+        }
     );
   }
 
   @Override
-  public boolean isVisible() {
-    return this.entity instanceof LivingEntity && !this.entity.isCrouching()
-        && this.configuration.isVisible(DisplayType.HEALTH_BAR);
+  protected RenderableComponent getRenderableComponent() {
+    if (!(this.entity instanceof LivingEntity) || this.entity.isCrouching()
+        || !this.configuration.isVisible(this.displayType)) {
+      return null;
+    }
+
+    RenderableComponent renderableComponent = RenderableComponent.of(
+        this.component((LivingEntity) this.entity)
+    );
+
+    this.startX = renderableComponent.getWidth() + 2;
+    return renderableComponent;
   }
 
   @Override
   public float getWidth() {
-    return this.resourceRenderer.entityHeartRenderer((LivingEntity) this.entity).getWidth(16);
-  }
-
-  @Override
-  public float getHeight() {
-    return 16F;
+    return super.getWidth() + 9;
   }
 
   @Override
   public float getScale() {
-    return 0.4F;
+    return .7F;
   }
+
+  protected abstract Component component(LivingEntity livingEntity);
 }
