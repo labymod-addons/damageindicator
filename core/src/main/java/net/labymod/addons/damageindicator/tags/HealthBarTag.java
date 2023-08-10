@@ -44,7 +44,7 @@ public final class HealthBarTag extends AbstractTagRenderer {
   @Override
   public void render(Stack stack, Entity entity) {
     RenderPipeline renderPipeline = this.renderPipeline;
-    renderPipeline.renderSeeThrough(entity, 0.0F, () ->
+    renderPipeline.renderNoneStandardNameTag(entity, () ->
         this.resourceRenderer.entityHeartRenderer((LivingEntity) entity)
             .renderHealthBar(stack, 0, 0, 16)
     );

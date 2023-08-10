@@ -45,9 +45,9 @@ public abstract class ComponentWithHeartTag extends NameTag {
 
   @Override
   public void render(Stack stack, Entity entity) {
+    super.render(stack, entity);
     RenderPipeline renderPipeline = this.renderPipeline;
-    renderPipeline.renderSeeThrough(entity, 0.0F, () -> {
-          super.render(stack, entity);
+    renderPipeline.renderNoneStandardNameTag(entity, () -> {
           LivingEntity livingEntity = (LivingEntity) entity;
           this.resourceRenderer.entityHeartRenderer(livingEntity).renderHealthBar(
               stack,
@@ -84,6 +84,11 @@ public abstract class ComponentWithHeartTag extends NameTag {
   @Override
   public float getScale() {
     return .7F;
+  }
+
+  @Override
+  protected boolean withDepthTest() {
+    return false;
   }
 
   protected abstract Component component(LivingEntity livingEntity);
