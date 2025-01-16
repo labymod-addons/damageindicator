@@ -22,6 +22,7 @@ import net.labymod.addons.damageindicator.tags.HealthPercentageTag;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.entity.player.tag.TagRegistry;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.addon.annotation.AddonMain;
 
 /**
@@ -29,6 +30,8 @@ import net.labymod.api.models.addon.annotation.AddonMain;
  */
 @AddonMain
 public final class DamageIndicator extends LabyAddon<DamageIndicatorConfiguration> {
+
+  public static final ResourceLocation ARMOR_STAND = ResourceLocation.create("minecraft", "armor_stand");
 
   @Override
   public void enable() {

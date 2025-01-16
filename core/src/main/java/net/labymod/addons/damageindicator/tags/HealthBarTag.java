@@ -52,8 +52,10 @@ public final class HealthBarTag extends AbstractTagRenderer {
 
   @Override
   public boolean isVisible() {
-    return this.entity instanceof LivingEntity && !this.entity.isCrouching()
-        && this.configuration.isVisible(DisplayType.HEALTH_BAR);
+    return this.entity instanceof LivingEntity &&
+        !this.entity.isCrouching() &&
+        this.configuration.isVisible(DisplayType.HEALTH_BAR) &&
+        !this.entity.entityId().equals(DamageIndicator.ARMOR_STAND);
   }
 
   @Override

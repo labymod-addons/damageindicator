@@ -91,5 +91,11 @@ public abstract class ComponentWithHeartTag extends NameTag {
     return false;
   }
 
+  @Override
+  public boolean isVisible() {
+    return super.isVisible() &&
+        !this.entity.entityId().equals(DamageIndicator.ARMOR_STAND);
+  }
+
   protected abstract Component component(LivingEntity livingEntity);
 }
