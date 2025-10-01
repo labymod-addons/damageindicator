@@ -1,18 +1,1 @@
-{
-    "damageindicator": {
-        "settings": {
-            "name": "",
-            "enabled": {
-                "name": ""
-            },
-            "displayType": {
-                "name": "",
-                "entries": {
-                    "healthBar": "",
-                    "amount": "",
-                    "percent": ""
-                }
-            }
-        }
-    }
-}
+{}
