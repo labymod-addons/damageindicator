@@ -1,1 +1,9 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "enabled": {
+                "name": "Ativado"
+            }
+        }
+    }
+}
