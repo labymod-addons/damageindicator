@@ -3,6 +3,12 @@
         "settings": {
             "enabled": {
                 "name": "Ativado"
+            },
+            "displayType": {
+                "entries": {
+                    "amount": "Quantidade",
+                    "percent": "Porcentagem"
+                }
             }
         }
     }
