@@ -1,1 +1,16 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "name": "SkadeIndikator",
+            "enabled": {
+                "name": "Aktiveret"
+            },
+            "displayType": {
+                "entries": {
+                    "amount": "Mængde",
+                    "percent": "Procent"
+                }
+            }
+        }
+    }
+}
