@@ -1,1 +1,7 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "name": "SkadeIndikator"
+        }
+    }
+}
