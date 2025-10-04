@@ -9,7 +9,8 @@
                 "name": "Görüntüleme Türü",
                 "entries": {
                     "healthBar": "Sağlık Çubuğu",
-                    "amount": "Miktar"
+                    "amount": "Miktar",
+                    "percent": "Yüzde"
                 }
             }
         }
