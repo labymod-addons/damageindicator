@@ -9,7 +9,8 @@
                 "entries": {
                     "amount": "Mængde",
                     "percent": "Procent"
-                }
+                },
+                "name": "Visningstype"
             }
         }
     }
