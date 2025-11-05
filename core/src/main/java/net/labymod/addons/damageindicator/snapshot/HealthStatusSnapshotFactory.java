@@ -13,3 +13,22 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+package net.labymod.addons.damageindicator.snapshot;
+
+import net.labymod.api.client.entity.player.Player;
+import net.labymod.api.laby3d.renderer.snapshot.Extras;
+import net.labymod.api.laby3d.renderer.snapshot.LabySnapshotFactory;
+import net.labymod.api.service.annotation.AutoService;
+
+@AutoService(LabySnapshotFactory.class)
+public class HealthStatusSnapshotFactory extends LabySnapshotFactory<Player, HealthStatusSnapshot> {
+
+  public HealthStatusSnapshotFactory() {
+    super(DamageIndicatorExtraKeys.HEALTH_STATUS);
+  }
+
+  @Override
+  protected HealthStatusSnapshot create(Player player, Extras extras) {
+    return new HealthStatusSnapshot(player, extras);
+  }
+}

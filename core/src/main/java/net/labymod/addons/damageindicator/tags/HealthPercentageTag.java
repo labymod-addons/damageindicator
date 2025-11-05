@@ -13,13 +13,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
 package net.labymod.addons.damageindicator.tags;
 
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.addons.damageindicator.snapshot.DamageIndicatorExtraKeys;
+import net.labymod.addons.damageindicator.snapshot.HealthStatusSnapshot;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.LivingEntity;
+import net.labymod.api.client.render.state.entity.LivingEntitySnapshot;
+import net.labymod.api.util.HealthStatus;
 
 /**
  * The damage indicator percentage tag renderer.
@@ -31,9 +34,15 @@ public class HealthPercentageTag extends ComponentWithHeartTag {
   }
 
   @Override
-  protected Component component(LivingEntity entity) {
-    int health = (int) Math.ceil(entity.getHealth());
-    int maxHealth = (int) Math.ceil(entity.getMaximalHealth());
+  protected Component createComponent(LivingEntitySnapshot snapshot) {
+    HealthStatusSnapshot healthStatusSnapshot = snapshot.get(
+        DamageIndicatorExtraKeys.HEALTH_STATUS
+    );
+
+    HealthStatus healthStatus = healthStatusSnapshot.healthStatus();
+    int health = (int) Math.ceil(healthStatus.getHealth());
+    int maxHealth = (int) Math.ceil(healthStatus.getMaxHealth());
     return Component.text(health * 100 / maxHealth + "%");
   }
+
 }

@@ -13,3 +13,15 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+package net.labymod.addons.damageindicator.snapshot;
+
+import net.labymod.api.laby3d.renderer.snapshot.ExtraKey;
+
+public final class DamageIndicatorExtraKeys {
+
+  public static final ExtraKey<HealthStatusSnapshot> HEALTH_STATUS = ExtraKey.of(
+      "health_status",
+      HealthStatusSnapshot.class
+  );
+
+}

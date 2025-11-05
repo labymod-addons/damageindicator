@@ -1,7 +1,10 @@
+import com.diffplug.spotless.LineEnding
+import net.labymod.labygradle.common.extension.model.labymod.ReleaseChannels
+
 plugins {
     id("net.labymod.labygradle")
     id("net.labymod.labygradle.addon")
-    id("org.cadixdev.licenser") version ("0.6.1")
+    id("com.diffplug.spotless") version ("8.0.0")
 }
 
 val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().split(";")
@@ -14,13 +17,10 @@ labyMod {
 
     minecraft {
         registerVersion(versions.toTypedArray()) {
-
-            accessWidener.set(file("./game-runner/src/${this.sourceSetName}/resources/itemphysics-${versionId}.accesswidener"))
-
             runs {
                 getByName("client") {
                     // When the property is set to true, you can log in with a Minecraft account
-                    devLogin = false
+                    devLogin = true
                 }
             }
         }
@@ -32,19 +32,27 @@ labyMod {
         author = "LabyMedia GmbH"
         minecraftVersion = "*"
         version = rootProject.version.toString()
+        releaseChannel = ReleaseChannels.LOCAL
     }
 }
 
 subprojects {
     plugins.apply("net.labymod.labygradle")
     plugins.apply("net.labymod.labygradle.addon")
-    plugins.apply("org.cadixdev.licenser")
+    plugins.apply("com.diffplug.spotless")
+
+    repositories {
+        mavenLocal()
+    }
 
     group = rootProject.group
     version = rootProject.version
 
-    license {
-        header(rootProject.file("gradle/LICENSE-HEADER.txt"))
-        newLine.set(true)
+    spotless {
+        lineEndings = LineEnding.UNIX
+
+        java {
+            licenseHeaderFile(rootProject.file("gradle/LICENSE-HEADER.txt"))
+        }
     }
 }

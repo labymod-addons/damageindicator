@@ -13,3 +13,24 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+package net.labymod.addons.damageindicator.snapshot;
+
+import net.labymod.api.client.entity.LivingEntity;
+import net.labymod.api.laby3d.renderer.snapshot.AbstractLabySnapshot;
+import net.labymod.api.laby3d.renderer.snapshot.Extras;
+import net.labymod.api.util.HealthStatus;
+
+public class HealthStatusSnapshot extends AbstractLabySnapshot {
+
+  private final HealthStatus healthStatus;
+
+  public HealthStatusSnapshot(LivingEntity entity, Extras extras) {
+    super(extras);
+    this.healthStatus = HealthStatus.immutable(entity.getHealth(), entity.getMaximalHealth(), entity.getAbsorptionHealth());
+  }
+
+  public HealthStatus healthStatus() {
+    return this.healthStatus;
+  }
+
+}

@@ -13,13 +13,16 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
 package net.labymod.addons.damageindicator.tags;
 
 import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.addons.damageindicator.DamageIndicatorConfiguration.DisplayType;
+import net.labymod.addons.damageindicator.snapshot.DamageIndicatorExtraKeys;
+import net.labymod.addons.damageindicator.snapshot.HealthStatusSnapshot;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.LivingEntity;
+import net.labymod.api.client.render.state.entity.LivingEntitySnapshot;
+import net.labymod.api.util.HealthStatus;
 
 /**
  * The damage indicator amount tag renderer.
@@ -31,9 +34,14 @@ public class HealthAmountTag extends ComponentWithHeartTag {
   }
 
   @Override
-  protected Component component(LivingEntity entity) {
-    double health = Math.ceil(entity.getHealth()) / 2;
-    double maxHealth = Math.ceil(entity.getMaximalHealth()) / 2;
+  protected Component createComponent(LivingEntitySnapshot snapshot) {
+    HealthStatusSnapshot healthStatusSnapshot = snapshot.get(
+        DamageIndicatorExtraKeys.HEALTH_STATUS
+    );
+
+    HealthStatus healthStatus = healthStatusSnapshot.healthStatus();
+    double health = Math.ceil(healthStatus.getHealth()) / 2;
+    double maxHealth = Math.ceil(healthStatus.getMaxHealth()) / 2;
     return Component.text(this.formatDouble(health) + "/" + this.formatDouble(maxHealth));
   }
 
