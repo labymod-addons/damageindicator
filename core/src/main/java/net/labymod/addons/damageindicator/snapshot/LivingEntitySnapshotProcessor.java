@@ -15,27 +15,30 @@
  */
 package net.labymod.addons.damageindicator.snapshot;
 
+import net.labymod.addons.damageindicator.DamageIndicator;
 import net.labymod.api.client.entity.Entity;
-import net.labymod.api.client.entity.player.Player;
+import net.labymod.api.client.entity.LivingEntity;
 import net.labymod.api.client.render.state.entity.EntitySnapshotProcessor;
 import net.labymod.api.client.render.state.entity.EntitySnapshotRegistry;
 import net.labymod.api.laby3d.renderer.snapshot.ExtrasWriter;
 import net.labymod.api.service.annotation.AutoService;
 
 @AutoService(EntitySnapshotProcessor.class)
-public class PlayerSnapshotProcessor extends EntitySnapshotProcessor<Player> {
+public class LivingEntitySnapshotProcessor extends EntitySnapshotProcessor<LivingEntity> {
 
-  public PlayerSnapshotProcessor(EntitySnapshotRegistry registry) {
+  public LivingEntitySnapshotProcessor(EntitySnapshotRegistry registry) {
     super(registry);
   }
 
   @Override
   public boolean supports(Entity entity) {
-    return entity instanceof Player;
+    return entity instanceof LivingEntity livingEntity && !livingEntity.entityId().equals(
+        DamageIndicator.ARMOR_STAND
+    );
   }
 
   @Override
-  public void process(Player player, float partialTicks, ExtrasWriter entityWriter) {
+  public void process(LivingEntity player, float partialTicks, ExtrasWriter entityWriter) {
     this.registry().captureSnapshot(entityWriter, DamageIndicatorExtraKeys.HEALTH_STATUS, player);
   }
 }
