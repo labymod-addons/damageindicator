@@ -1,1 +1,18 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "name": "Schade-indicator",
+            "enabled": {
+                "name": "Ingeschakeld"
+            },
+            "displayType": {
+                "name": "Weergavetype",
+                "entries": {
+                    "healthBar": "Gezondheidsbalk",
+                    "amount": "Hoeveelheid",
+                    "percent": "Procent"
+                }
+            }
+        }
+    }
+}
