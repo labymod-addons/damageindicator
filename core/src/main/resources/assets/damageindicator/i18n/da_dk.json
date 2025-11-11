@@ -8,7 +8,8 @@
             "displayType": {
                 "entries": {
                     "amount": "Mængde",
-                    "percent": "Procent"
+                    "percent": "Procent",
+                    "healthBar": "Livsbjælke"
                 },
                 "name": "Visningstype"
             }
