@@ -1,1 +1,17 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "name": "Hasar Göstergesi",
+            "enabled": {
+                "name": "Aktif"
+            },
+            "displayType": {
+                "name": "Görüntüleme Türü",
+                "entries": {
+                    "healthBar": "Sağlık Çubuğu",
+                    "amount": "Miktar"
+                }
+            }
+        }
+    }
+}
