@@ -27,6 +27,7 @@ import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.client.render.state.entity.EntitySnapshot;
 import net.labymod.api.client.render.state.entity.LivingEntitySnapshot;
 import net.labymod.api.laby3d.pipeline.RenderStates;
+import net.labymod.api.laby3d.pipeline.material.LevelMaterial;
 import net.labymod.api.laby3d.render.queue.CustomGeometryRenderer;
 import net.labymod.api.laby3d.render.queue.SubmissionCollector;
 import net.labymod.api.laby3d.render.queue.submissions.IconSubmission;
@@ -60,7 +61,7 @@ public abstract class ComponentWithHeartTag extends ComponentNameTag {
   ) {
     submissionCollector.submitCustomGeometry(
         stack,
-        RenderStates.GUI,
+        LevelMaterial.builder(RenderStates.GUI).build(),
         new ColoredRectangle(
             0, 0, this.getWidth() + 2.0F, this.getHeight(),
             DEFAULT_BACKGROUND_DEPTH,
