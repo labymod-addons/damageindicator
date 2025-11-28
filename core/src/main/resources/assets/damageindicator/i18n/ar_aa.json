@@ -6,7 +6,10 @@
                 "name": "مفعّل"
             },
             "displayType": {
-                "name": "نوع العرض"
+                "name": "نوع العرض",
+                "entries": {
+                    "percent": "نسبة مئوية"
+                }
             }
         }
     }
