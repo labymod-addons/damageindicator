@@ -1,1 +1,18 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "name": "DamageIndicator",
+            "enabled": {
+                "name": "Включено"
+            },
+            "displayType": {
+                "name": "Режим отображения",
+                "entries": {
+                    "healthBar": "Шкала здоровья",
+                    "amount": "Количество",
+                    "percent": "Процент"
+                }
+            }
+        }
+    }
+}
