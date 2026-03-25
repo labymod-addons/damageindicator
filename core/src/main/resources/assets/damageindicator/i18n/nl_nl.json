@@ -1,14 +1,14 @@
 {
     "damageindicator": {
         "settings": {
-            "name": "Schade-indicator",
+            "name": "Schade indicator",
             "enabled": {
                 "name": "Ingeschakeld"
             },
             "displayType": {
                 "name": "Weergavetype",
                 "entries": {
-                    "healthBar": "Gezondheidsbalk",
+                    "healthBar": "Healtbar",
                     "amount": "Hoeveelheid",
                     "percent": "Procent"
                 }
