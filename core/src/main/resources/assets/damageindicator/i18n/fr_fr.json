@@ -8,7 +8,9 @@
             "displayType": {
                 "name": "Type d'affichage",
                 "entries": {
-                    "healthBar": "Barre de santé"
+                    "healthBar": "Barre de santé",
+                    "amount": "Quantité",
+                    "percent": "Pourcentage"
                 }
             }
         }
