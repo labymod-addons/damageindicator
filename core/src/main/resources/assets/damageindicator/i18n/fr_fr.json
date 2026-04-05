@@ -1,1 +1,10 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "name": "Indicateur de dégâts",
+            "enabled": {
+                "name": "Activé"
+            }
+        }
+    }
+}
