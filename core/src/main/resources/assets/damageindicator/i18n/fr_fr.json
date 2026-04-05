@@ -4,6 +4,12 @@
             "name": "Indicateur de dégâts",
             "enabled": {
                 "name": "Activé"
+            },
+            "displayType": {
+                "name": "Type d'affichage",
+                "entries": {
+                    "healthBar": "Barre de santé"
+                }
             }
         }
     }
