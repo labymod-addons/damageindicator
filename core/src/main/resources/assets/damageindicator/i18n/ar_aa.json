@@ -1,7 +1,13 @@
 {
     "damageindicator": {
         "settings": {
-            "name": "مؤشر الضرر"
+            "name": "مؤشر الضرر",
+            "enabled": {
+                "name": "مفعّل"
+            },
+            "displayType": {
+                "name": "نوع العرض"
+            }
         }
     }
 }
