@@ -1,1 +1,18 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "enabled": {
+                "name": "מופעל"
+            },
+            "displayType": {
+                "name": "סוג תצוגה",
+                "entries": {
+                    "healthBar": "מד חיים",
+                    "amount": "כמות",
+                    "percent": "אחוז"
+                }
+            },
+            "name": "מד נזק"
+        }
+    }
+}
