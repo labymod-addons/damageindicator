@@ -1,1 +1,14 @@
-{}
+{
+    "damageindicator": {
+        "settings": {
+            "displayType": {
+                "name": "Тип дисплея",
+                "entries": {
+                    "healthBar": "Шкала здоров’я",
+                    "amount": "Кількість",
+                    "percent": "Відсоток"
+                }
+            }
+        }
+    }
+}
